@@ -21,7 +21,7 @@ import dagger.hilt.android.AndroidEntryPoint
 @AndroidEntryPoint
 class UserFragmentDetails : Fragment() {
 
-    private val userViewModel: UserViewModel by viewModels<UserViewModel>()
+    private val userViewModel: UserViewModel by viewModels()
     private var userItem: UserItem? = null
     private val binding by lazy {
         FragmentUserDetailsBinding.inflate(layoutInflater)

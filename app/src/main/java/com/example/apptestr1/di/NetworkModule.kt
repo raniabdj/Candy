@@ -1,7 +1,7 @@
 package com.example.apptestr1.di
 
 import com.example.apptestr1.network.ApiExchange
-import com.example.apptestr1.network.ExchangeRepo
+import com.example.apptestr1.network.ExchangeRepository
 import com.example.apptestr1.network.ExchangeRepositoryImpl
 import com.jakewharton.retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import dagger.Module
@@ -43,7 +43,7 @@ class NetworkModule {
             .build()
 
     @Provides
-    fun providesMovieRepository(stackExchangeServices: ApiExchange): ExchangeRepo =
+    fun providesMovieRepository(stackExchangeServices: ApiExchange): ExchangeRepository =
         ExchangeRepositoryImpl(stackExchangeServices)
 
 }

@@ -1,11 +1,13 @@
 package com.example.apptestr1.ui
 
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import com.android.interviewtask.candyspace.model.UsersList
 import com.example.apptestr1.R
@@ -17,6 +19,7 @@ import com.example.apptestr1.utiles.showErrorMsg
 import com.example.apptestr1.viewModels.UserViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
+private const val TAG = "UsersListFragment"
 @AndroidEntryPoint
 class UsersListFragment : Fragment() {
 
@@ -24,12 +27,13 @@ class UsersListFragment : Fragment() {
         FragmentUsersListBinding.inflate(layoutInflater)
     }
     private val userViewModel: UserViewModel by viewModels<UserViewModel>()
+    //private lateinit var userViewModel: UserViewModel
     private lateinit var usersAdapter: UserListAdapter
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-
+        //userViewModel=ViewModelProvider(this).get(UserViewModel::class.java)
         usersAdapter=UserListAdapter()
         binding.rcvUserslist.adapter = usersAdapter
         userViewModel.usersLiveData.observe(viewLifecycleOwner) { response ->
@@ -43,6 +47,7 @@ class UsersListFragment : Fragment() {
                     usersAdapter.loadData(usersList.userItems)
                 }
                 is Status.ERROR -> {
+                    Log.d(TAG, "onCreateView: "+response.error.message)
                     binding.progressBar.visibility = View.GONE
                     showErrorMsg(binding.root, response.error.localizedMessage.toString())
                 }

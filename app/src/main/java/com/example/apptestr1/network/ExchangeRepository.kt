@@ -1,4 +1,5 @@
 package com.example.apptestr1.network
+
 import com.example.apptestr1.utiles.Status
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -6,8 +7,8 @@ import kotlinx.coroutines.flow.StateFlow
 interface ExchangeRepository {
     val userresponseFlow: StateFlow<Status>
     val tagresponseFlow: StateFlow<Status>
-     fun getUsersList(username:String="")
-     fun getTagList(userid:String)
+    suspend fun getUsersList(username: String = "")
+    suspend fun getTagList(userid: String)
 }
 
 class ExchangeRepositoryImpl(
@@ -24,7 +25,7 @@ class ExchangeRepositoryImpl(
     override val tagresponseFlow: StateFlow<Status>
         get() = _tagresponseFlow
 
-    override  fun getUsersList(username:String) {
+    override suspend fun getUsersList(username: String) {
         try {
             val response = stackExchangeApi.getUsersList(username)
 
@@ -32,7 +33,8 @@ class ExchangeRepositoryImpl(
                 response.body()?.let {
                     _userresponseFlow.value = Status.SUCCESS(it)
                 } ?: run {
-                    _userresponseFlow.value = Status.ERROR(IllegalStateException("User details are coming as null!"))
+                    _userresponseFlow.value =
+                        Status.ERROR(IllegalStateException("User details are coming as null!"))
                 }
             } else {
                 _userresponseFlow.value = Status.ERROR(Exception(response.errorBody()?.string()))
@@ -42,7 +44,7 @@ class ExchangeRepositoryImpl(
         }
     }
 
-    override  fun getTagList(userid: String) {
+    override suspend fun getTagList(userid: String) {
         try {
             val response = stackExchangeApi.getTopTags(userid)
 
@@ -50,7 +52,8 @@ class ExchangeRepositoryImpl(
                 response.body()?.let {
                     _tagresponseFlow.value = Status.SUCCESS(it)
                 } ?: run {
-                    _tagresponseFlow.value = Status.ERROR(IllegalStateException("Tag details are coming as null!"))
+                    _tagresponseFlow.value =
+                        Status.ERROR(IllegalStateException("Tag details are coming as null!"))
                 }
 
             } else {

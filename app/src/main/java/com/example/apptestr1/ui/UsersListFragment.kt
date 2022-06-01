@@ -15,6 +15,7 @@ import com.example.apptestr1.adapter.UserListAdapter
 import com.example.apptestr1.databinding.FragmentUsersListBinding
 import com.example.apptestr1.utiles.ARG_USERITEM
 import com.example.apptestr1.utiles.Status
+import com.example.apptestr1.utiles.hideKeyboard
 import com.example.apptestr1.utiles.showErrorMsg
 import com.example.apptestr1.viewModels.UserViewModel
 import dagger.hilt.android.AndroidEntryPoint
@@ -55,6 +56,7 @@ class UsersListFragment : Fragment() {
         }
         binding.btnSearch.setOnClickListener{
             userViewModel.subscribeToUsersList(binding.edtSearch.text.toString())
+            requireActivity().hideKeyboard(it)
         }
         usersAdapter.onItemClick={useritem ->
             val bundle=Bundle().apply{

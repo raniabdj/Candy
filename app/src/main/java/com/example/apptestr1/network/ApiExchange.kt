@@ -10,18 +10,18 @@ import retrofit2.http.Query
 interface ApiExchange {
 
     @GET(METHOD_USER)
-     fun getUsersList(
-        @Query(QUERY_INNAME)inname:String="",
-        @Query(QUERY_PAGESIZE)size:String="20",
-        @Query(QUERY_ORDER)order:String="asc",
-        @Query(QUERY_SORT)sort: String="name",
-        @Query(QUERY_SITE)site: String="stackoverflow"
+    suspend fun getUsersList(
+        @Query(QUERY_INNAME) inname: String = "",
+        @Query(QUERY_PAGESIZE) size: String = "20",
+        @Query(QUERY_ORDER) order: String = "asc",
+        @Query(QUERY_SORT) sort: String = "name",
+        @Query(QUERY_SITE) site: String = "stackoverflow"
     ): Response<UsersList>
 
     @GET(METHOD_TOPTAGS)
-     fun getTopTags(
-        @Path(PATH_ID)userid:String,
-        @Query(QUERY_SITE)site: String="stackoverflow"
+    suspend fun getTopTags(
+        @Path(PATH_ID) userid: String,
+        @Query(QUERY_SITE) site: String = "stackoverflow"
     ): Response<TopTags>
 
     companion object {
